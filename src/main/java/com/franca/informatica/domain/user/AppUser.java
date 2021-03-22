@@ -1,43 +1,43 @@
 package com.franca.informatica.domain.user;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import com.franca.informatica.domain.role.Role;
 
 @Entity
 @Table(name = "app_user")
 public class AppUser {
+
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@NotEmpty(message =" O nome de usu√°rio √© obrigat√≥rio")
+
+	@NotEmpty(message = "O nome de usu·rio È obrigatÛrio")
 	private String username;
-	@NotEmpty(message =" O senha √© obrigat√≥rio")
+
+	@NotEmpty(message = "A senha È obrigatÛria")
 	private String password;
-	@NotEmpty(message =" O nome de exibi√ß√£o √© obrigat√≥rio")
+
+	@NotEmpty(message = "O nome de exibiÁ„o È obrigatÛrio")
 	private String displayName;
-	
-	
+
+	@ManyToMany
+	private Set<Role> roles;
+
+	public AppUser() {
+	}
 
 	public AppUser(String username, String password, String displayName) {
-		super();
 		this.username = username;
 		this.password = password;
 		this.displayName = displayName;
-	}
-
-	public AppUser() {
-		super();
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -56,13 +56,25 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public String getDisplayNam() {
+	public String getDisplayName() {
 		return displayName;
 	}
 
-	public void setDisplayNam(String displayNam) {
-		this.displayName = displayNam;
-	}	
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 	
 	
 
