@@ -9,6 +9,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.franca.informatica.domain.role.Role;
 
 @Entity
@@ -25,9 +26,16 @@ public class AppUser {
 	@NotEmpty(message = "A senha é obrigatória")
 	private String password;
 
-	@NotEmpty(message = "O nome de exibição é obrigatório")
+	
 	private String displayName;
-
+	@JsonProperty("firstname")
+	@NotEmpty(message = "O Primeiro Nome  é obrigatório")
+	private String firstName;
+	
+	@JsonProperty("lastname")
+	@NotEmpty(message = "O Último Nome é obrigatório")
+	private String lastName;
+	
 	@ManyToMany
 	private Set<Role> roles;
 
@@ -37,6 +45,12 @@ public class AppUser {
 	public AppUser(String username, String password, String displayName) {
 		this.username = username;
 		this.password = password;
+		this.displayName = displayName;
+	}
+
+	public AppUser(String username, String displayName) {
+		super();
+		this.username = username;
 		this.displayName = displayName;
 	}
 
@@ -75,7 +89,5 @@ public class AppUser {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
 
 }

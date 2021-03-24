@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.franca.informatica.domain.user.AppUser;
+import com.franca.informatica.domain.user.UserDTO;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -61,5 +62,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			.compact();
 		
 		response.addHeader(SecurityConstants.AUTHORIZATION_HEADER, SecurityConstants.TOKEN_PREFIX + jwtToken);
+		
+		response.getWriter().write(UserDTO.buildToJSon(userDetails.getUsername(), userDetails.getDisplayName(), jwtToken));
 	}
+	
 }

@@ -28,7 +28,7 @@ public class InsertTestData {
 	
 	@EventListener
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		/*PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		AppUser appUser1 = new AppUser("john", encoder.encode("abc"), "John Coder");
 		appUSerRepository.save(appUser1);
 		
@@ -48,5 +48,6 @@ public class InsertTestData {
 			task.setAppUser(appUser2);
 			taskRepository.save(task);
 		}
+		*/
 	}
 }

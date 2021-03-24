@@ -40,5 +40,10 @@ public class WebResquestExceptionHandler {
 	public RestResponseError handlerException (NotFoundAppUserException rep) {
 		return RestResponseError.fromMessage(rep.getMessage());
 	}
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public RestResponseError handlerException (Exception rep) {
+		return RestResponseError.fromMessage(rep.getMessage());
+	}
 	
 }
