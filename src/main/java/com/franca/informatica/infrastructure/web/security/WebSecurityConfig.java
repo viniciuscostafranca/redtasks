@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 		.and()
 			.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 			.addFilter(new JWTAuthorizationFilter(authenticationManager()))
+			
 		.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		

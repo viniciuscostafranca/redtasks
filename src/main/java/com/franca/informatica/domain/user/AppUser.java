@@ -26,13 +26,13 @@ public class AppUser {
 	@NotEmpty(message = "A senha é obrigatória")
 	private String password;
 
-	
 	private String displayName;
-	@JsonProperty("firstname")
+
+	@JsonProperty("firstName")
 	@NotEmpty(message = "O Primeiro Nome  é obrigatório")
 	private String firstName;
 	
-	@JsonProperty("lastname")
+	@JsonProperty("lastName")
 	@NotEmpty(message = "O Último Nome é obrigatório")
 	private String lastName;
 	

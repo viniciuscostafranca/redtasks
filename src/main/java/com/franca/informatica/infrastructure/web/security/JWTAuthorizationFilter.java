@@ -59,4 +59,7 @@ public class JWTAuthorizationFilter extends UsernamePasswordAuthenticationFilter
 		
 		response.addHeader(SecurityConstants.AUTHORIZATION_HEADER, SecurityConstants.TOKEN_PREFIX + jwtToken);
 	}
+	
+	
+	
 }
