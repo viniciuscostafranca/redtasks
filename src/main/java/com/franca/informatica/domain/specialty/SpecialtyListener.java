@@ -1,4 +1,4 @@
-package com.franca.informatica.domain.task;
+package com.franca.informatica.domain.specialty;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PrePersist;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 
 import com.franca.informatica.domain.user.AppUser;
 import com.franca.informatica.domain.user.AppUserRepository;
-
+/*
 @Component
-public class TaskListener {
+public class SpecialtyListener {
 
 	private static AppUserRepository appUserRepository;
 	
 	@PrePersist
-	public void onPrePersistHandler(Task task) {
-		if (task.getAppUser() == null) {
+	public void onPrePersistHandler(Specialty task) {
+		if (task. == null) {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			AppUser appUser = appUserRepository.findByUsername(username);
 			
@@ -31,6 +31,7 @@ public class TaskListener {
 	
 	@Autowired
 	public void init(AppUserRepository appUserRepository) {
-		TaskListener.appUserRepository = appUserRepository;
+		SpecialtyListener.appUserRepository = appUserRepository;
 	}
 }
+*/

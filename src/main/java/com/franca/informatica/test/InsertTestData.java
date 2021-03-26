@@ -9,19 +9,19 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.franca.informatica.domain.task.Task;
-import com.franca.informatica.domain.task.TaskRepository;
+import com.franca.informatica.domain.specialty.Specialty;
+import com.franca.informatica.domain.specialty.SpecialtyRepository;
 import com.franca.informatica.domain.user.AppUser;
 import com.franca.informatica.domain.user.AppUserRepository;
 
 @Component
 public class InsertTestData {
 	
-	private TaskRepository taskRepository;
+	private SpecialtyRepository taskRepository;
 	private AppUserRepository appUSerRepository;
 	
 	@Autowired
-	public InsertTestData(TaskRepository taskRepository, AppUserRepository appUSerRepository) {
+	public InsertTestData(SpecialtyRepository taskRepository, AppUserRepository appUSerRepository) {
 		this.taskRepository = taskRepository;
 		this.appUSerRepository = appUSerRepository;
 	}

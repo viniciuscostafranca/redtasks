@@ -10,19 +10,19 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.franca.informatica.domain.task.Task;
+import com.franca.informatica.domain.specialty.Specialty;
 
 @SpringBootApplication
 public class RedtaksBackendApplication implements RepositoryRestConfigurer{
 	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(RedtaksBackendApplication.class);
 	public static void main(String[] args) {
 		SpringApplication.run(RedtaksBackendApplication.class, args);
-		logger.info(" Redtask in action!");
+		logger.info(" Agendamento in action!");
 	}
 	//exposicao aos ids
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-		config.exposeIdsFor(Task.class);
+		config.exposeIdsFor(Specialty.class);
 		config.getCorsRegistry()
 			.addMapping("/**")
 			.allowedOrigins("*")

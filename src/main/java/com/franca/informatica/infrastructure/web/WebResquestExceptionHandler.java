@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.franca.informatica.domain.task.DuplicateTaskException;
+import com.franca.informatica.domain.specialty.DuplicateSpecialtyException;
 import com.franca.informatica.domain.user.DuplicateAppUserException;
 import com.franca.informatica.domain.user.NotFoundAppUserException;
 
@@ -24,7 +24,7 @@ public class WebResquestExceptionHandler {
 
 	@ExceptionHandler
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public RestResponseError handlerException (DuplicateTaskException rep) {
+	public RestResponseError handlerException (DuplicateSpecialtyException rep) {
 		return RestResponseError.fromMessage(rep.getMessage());
 	}
 	

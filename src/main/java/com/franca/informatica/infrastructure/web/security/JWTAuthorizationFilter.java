@@ -2,7 +2,6 @@ package com.franca.informatica.infrastructure.web.security;
 
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,55 +10,41 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.franca.informatica.domain.user.AppUser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JWTAuthorizationFilter extends UsernamePasswordAuthenticationFilter {
-
-	private AuthenticationManager authenticationManager;
+public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
+		super(authenticationManager);
 	}
 	
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			AppUser appUser = mapper.readValue(request.getInputStream(), AppUser.class);
-			
-			UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword());
-			return authenticationManager.authenticate(upat);
+		String token = request.getHeader(SecurityConstants.AUTHORIZATION_HEADER);
 		
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		if (token != null && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+			UsernamePasswordAuthenticationToken authentication = getAuthentcation(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
+		
+		chain.doFilter(request, response);
 	}
 	
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+	private UsernamePasswordAuthenticationToken getAuthentcation(String token) {
+		String username = Jwts.parser().setSigningKey(SecurityConstants.SECRET_KEY)
+			.parseClaimsJws(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
+			.getBody().getSubject();
 		
-		UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
+		if (username != null) {
+			return new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.NO_AUTHORITIES);
+		}
 		
-		String jwtToken = Jwts.builder()
-			.setSubject(userDetails.getUsername())
-			.setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-			.claim("displayName", userDetails.getDisplayName())
-			.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET_KEY)
-			.compact();
-		
-		response.addHeader(SecurityConstants.AUTHORIZATION_HEADER, SecurityConstants.TOKEN_PREFIX + jwtToken);
+		return null;
 	}
-	
-	
-	
 }
