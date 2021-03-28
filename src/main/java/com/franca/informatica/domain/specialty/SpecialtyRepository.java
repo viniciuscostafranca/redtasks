@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(exported = true,collectionResourceRel = "specialty", path = "specialty")
+@RepositoryRestResource( path = "specialty",collectionResourceRel = "specialtys" )
 public interface SpecialtyRepository extends PagingAndSortingRepository<Specialty, Integer> {
 
 	Specialty findByName(String name);
