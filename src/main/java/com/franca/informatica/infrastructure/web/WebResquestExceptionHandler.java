@@ -2,6 +2,7 @@ package com.franca.informatica.infrastructure.web;
 
 import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,9 +16,10 @@ import com.franca.informatica.domain.user.NotFoundAppUserException;
 public class WebResquestExceptionHandler {
 	
 	
+	@SuppressWarnings("unchecked")
 	@ExceptionHandler
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public RestResponseError handlerException (RepositoryConstraintViolationException rep) {
+	public ResponseEntity<CustomErrorResponse> handlerException (RepositoryConstraintViolationException rep) {
 		return RestResponseError.fromValidationError(rep.getErrors());
 	}
 	

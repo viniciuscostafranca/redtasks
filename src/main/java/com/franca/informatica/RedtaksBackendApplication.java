@@ -10,6 +10,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.franca.informatica.domain.specialty.Specialty;
 
@@ -22,15 +23,17 @@ public class RedtaksBackendApplication implements RepositoryRestConfigurer{
 	}
 	//exposicao aos ids
 	@Override
-	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 		config.exposeIdsFor(Specialty.class);
-	
-		config.getCorsRegistry()
+		config.setReturnBodyOnCreate(true);
+		config.setReturnBodyOnUpdate(true);
+		/*cors
 			.addMapping("/**")
 			.allowedOrigins("*")
-			.allowedMethods("GET", "POST", "PUT", "DELETE");
+			.allowedMethods("GET", "POST", "PUT", "DELETE");*/
 		
 		logger.info("Repository CORS setup... OK!");
+		//RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, cors);
 	}
 	
 	//validacao custom

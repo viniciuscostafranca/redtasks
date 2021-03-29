@@ -1,24 +1,27 @@
 package com.franca.informatica.infrastructure.web;
 
+import java.time.LocalDateTime;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 
 public class RestResponseError {
 	
-	private String error;
+	private CustomErrorResponse error;
 	public RestResponseError() {
 		
 	}
-	public String getError() {
+	public CustomErrorResponse getError() {
 		return error;
 	}
-	public void setError(String error) {
+	public void setError(CustomErrorResponse error) {
 		this.error = error;
 	}
 	
-	public static RestResponseError fromValidationError(Errors errors) {
+	public static ResponseEntity<CustomErrorResponse> fromValidationError(Errors errors) {
 		
-		RestResponseError responseError = new RestResponseError();
-		
+	
 		StringBuffer str = new StringBuffer();
 		
 		errors.getAllErrors().forEach(err -> {
@@ -26,9 +29,15 @@ public class RestResponseError {
 			str.append(err.getDefaultMessage());
 			str.append(". ");
 		});
-		responseError.setError(str.toString());
 		
-		return responseError;
+	
+		CustomErrorResponse customErros = new CustomErrorResponse();
+		customErros.setTimestamp(LocalDateTime.now());
+		customErros.setError(str.toString());
+		customErros.setStatus(HttpStatus.NOT_FOUND.value());
+      
+	
+        return new ResponseEntity<CustomErrorResponse>(customErros, HttpStatus.NOT_FOUND);
 		
 		
 	}
@@ -36,7 +45,7 @@ public class RestResponseError {
 	
 	public static RestResponseError fromMessage(String message) {
 		RestResponseError  errorMessage = new RestResponseError();
-		errorMessage.setError(message);
+		//errorMessage.setError(message);
 		return errorMessage;
 		
 	}
