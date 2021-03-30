@@ -8,18 +8,18 @@ import org.springframework.validation.Errors;
 
 public class RestResponseError {
 	
-	private CustomErrorResponse error;
+	private String error;
 	public RestResponseError() {
 		
 	}
-	public CustomErrorResponse getError() {
+	public String getError() {
 		return error;
 	}
-	public void setError(CustomErrorResponse error) {
+	public void setError(String error) {
 		this.error = error;
 	}
 	
-	public static ResponseEntity<CustomErrorResponse> fromValidationError(Errors errors) {
+	public static String fromValidationError(Errors errors) {
 		
 	
 		StringBuffer str = new StringBuffer();
@@ -31,21 +31,14 @@ public class RestResponseError {
 		});
 		
 	
-		CustomErrorResponse customErros = new CustomErrorResponse();
-		customErros.setTimestamp(LocalDateTime.now());
-		customErros.setError(str.toString());
-		customErros.setStatus(HttpStatus.NOT_FOUND.value());
-      
-	
-        return new ResponseEntity<CustomErrorResponse>(customErros, HttpStatus.NOT_FOUND);
-		
+		return str.toString();
 		
 	}
 	
 	
 	public static RestResponseError fromMessage(String message) {
 		RestResponseError  errorMessage = new RestResponseError();
-		//errorMessage.setError(message);
+		errorMessage.setError(message);
 		return errorMessage;
 		
 	}

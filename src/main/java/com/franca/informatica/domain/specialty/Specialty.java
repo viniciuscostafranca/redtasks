@@ -14,8 +14,8 @@ public class Specialty {
 	@GeneratedValue
 	private Integer id;
 	
-	@NotEmpty(message = "A nome da especilidade È obrigatÛrio")
-	@Length(max = 120 , min = 3, message = " O tamanho da especilidade inv·lido")
+	@NotEmpty(message = "A nome da especilidade √© obrigat√°rio")
+	@Length(max = 120 , min = 3, message = " O tamanho da especilidade inv√°lido")
 	private String name;
 
 	public Integer getId() {

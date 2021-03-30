@@ -19,7 +19,7 @@ public class WebResquestExceptionHandler {
 	@SuppressWarnings("unchecked")
 	@ExceptionHandler
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public ResponseEntity<CustomErrorResponse> handlerException (RepositoryConstraintViolationException rep) {
+	public String handlerException (RepositoryConstraintViolationException rep) {
 		return RestResponseError.fromValidationError(rep.getErrors());
 	}
 	
